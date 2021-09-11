@@ -7,5 +7,5 @@ public class mian {
 		LogReg frm = new LogReg(args);
 		frm.poompe(args);
 	}
-
+//hola 
 }
