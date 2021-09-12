@@ -60,7 +60,7 @@ public class LogReg extends JFrame {
 		JButton Login = new JButton("Login (Import QR code)");
 		Login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser("D:\\finalo\\pinalto");
+				JFileChooser fileChooser = new JFileChooser("./");
 				int result = fileChooser.showOpenDialog(contentPane);
 				
 				//may need later
