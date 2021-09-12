@@ -28,11 +28,11 @@ public class MyFiles extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void sain(String[] args, String path, String Owner) {
+	public static void sain(String[] args, String path,String Email, String Owner) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MyFiles frame = new MyFiles(path, Owner);
+					MyFiles frame = new MyFiles(path,Email, Owner);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,13 +43,14 @@ public class MyFiles extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param Owner 
 	 */
-	public MyFiles(String path , String Owner) {
+	public MyFiles(String path , String Email, String Owner) {
 		
 		System.out.println("My Files = "+ Owner);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1359, 828);
+		setBounds(100, 100, 1229, 727);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -66,11 +67,11 @@ public class MyFiles extends JFrame {
         DefaultTableModel model = new DefaultTableModel(data,col);
 		
 		JButton btnNewButton = new JButton("Search");
-		btnNewButton.setBounds(1203, 31, 130, 23);
+		btnNewButton.setBounds(1063, 32, 130, 23);
 		contentPane.add(btnNewButton);
 		
 		textField = new JTextField();
-		textField.setBounds(194, 32, 999, 23);
+		textField.setBounds(194, 32, 825, 23);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
@@ -94,7 +95,7 @@ public class MyFiles extends JFrame {
 		contentPane.add(btnNewButton_2);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("D:\\finalo\\pinalto\\lock (4).png"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\AKRAME\\Desktop\\pfe\\lock (4).png"));
 		lblNewLabel.setBounds(26, 65, 130, 128);
 		contentPane.add(lblNewLabel);
 		
@@ -113,8 +114,8 @@ public class MyFiles extends JFrame {
 		JButton btnNewButton_2_2 = new JButton("Return");
 		btnNewButton_2_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Home frm = new Home(path , Owner);
-				frm.sain(null, path, Owner);
+				Home frm = new Home(path ,Email, Owner);
+				frm.sain(null, path,Email, Owner);
 				dispose();
 			}
 		});
@@ -122,7 +123,7 @@ public class MyFiles extends JFrame {
 		contentPane.add(btnNewButton_2_2);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(194, 65, 1139, 679);
+		scrollPane.setBounds(194, 65, 1000, 600);
 		contentPane.add(scrollPane);
 		
 		table = new JTable(model);
@@ -133,13 +134,6 @@ public class MyFiles extends JFrame {
 		contentPane.add(btnNewButton_2_3);
 		
 		JButton btnNewButton_2_3_1 = new JButton("Encrypt");
-		btnNewButton_2_3_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String info = data [table.getSelectedRow()][0];
-				Encrypd frm = new Encrypd(info);
-				frm.barad(info);
-			}
-		});
 		btnNewButton_2_3_1.setBounds(783, 755, 130, 23);
 		contentPane.add(btnNewButton_2_3_1);
 	}

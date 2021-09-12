@@ -84,8 +84,8 @@ public class LogReg extends JFrame {
 						System.out.println(info[1]);
 						System.out.println(info[2]);
 						System.out.println(info[3]);
-						Home HomeFrame = new Home(selectedFile.getAbsolutePath(), info[1]+info[2]);
-						HomeFrame.sain(args, selectedFile.getAbsolutePath(), info[1]+info[2]);
+						Home HomeFrame = new Home(selectedFile.getAbsolutePath(), info[0],info[1]+" "+info[2]);
+						HomeFrame.sain(args, selectedFile.getAbsolutePath(),info[0], info[1]+" "+info[2]);
 						dispose();
 						
 					}
@@ -132,8 +132,8 @@ public class LogReg extends JFrame {
 		contentPane.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
-		lblNewLabel_4.setIcon(new ImageIcon("D:\\finalo\\pinalto\\lock (4).png"));
-		lblNewLabel_4.setBounds(112, 0, 128, 134);
+		lblNewLabel_4.setIcon(new ImageIcon("D:\\peepeepoopoo\\PFE\\lock (4).png"));
+		lblNewLabel_4.setBounds(110, 11, 128, 134);
 		contentPane.add(lblNewLabel_4);
 		lblNewLabel_3.setVisible(false);
 	}

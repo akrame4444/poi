@@ -27,6 +27,8 @@ import UI.Home;
 import UI.QRSave;
 
 public class SQLManager {
+   public static String url = "jdbc:mysql://localhost/dbpfe?characterEncoding=latin1&useConfigs=maxPerformance";
+
 	
 	   public static void UpdateText (String info, String cribd) {
 		      // Open a connection
@@ -43,7 +45,6 @@ public class SQLManager {
 	
     public static String getText (String info) {
         try {
-            String url = "jdbc:mysql://localhost/dbpfe";
             Connection conn = DriverManager.getConnection(url,"root","");
             Statement stmt = conn.createStatement();
             ResultSet rs;
@@ -66,7 +67,6 @@ public class SQLManager {
 	
     public static String getext (String info) {
         try {
-            String url = "jdbc:mysql://localhost/dbpfe";
             Connection conn = DriverManager.getConnection(url,"root","");
             Statement stmt = conn.createStatement();
             ResultSet rs;
@@ -103,8 +103,12 @@ public class SQLManager {
 	    }
 	}
 	
-    public static void readPicture(String filename) {
+   
+	public static void readPicture(String filename) {
         // update sql
+    	
+    	 String F = null;
+    	
         String selectSQL = "SELECT Content FROM files WHERE Filename=?";
         ResultSet rs = null;
         FileOutputStream fos = null;
@@ -114,8 +118,8 @@ public class SQLManager {
         try {
             //connecto
 	        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-     	    String mysqlUrl = "jdbc:mysql://localhost/dbpfe";
-		    Connection con = DriverManager.getConnection(mysqlUrl, "root", "");
+     	    
+		    Connection con = DriverManager.getConnection(url, "root", "");
 		    System.out.println("Connection established......");
 		    //connecto
 		    
@@ -125,17 +129,21 @@ public class SQLManager {
             rs = pstmt.executeQuery();
             //dozan
             // write binary stream into file
-            File file = new File("ppnyar"+".png");
+            File file = new File("temp");
             fos = new FileOutputStream(file);
-
+           
             System.out.println("Writing BLOB to file " + file.getAbsolutePath());
             while (rs.next()) {
                 InputStream input = rs.getBinaryStream("Content");
                 byte[] buffer = new byte[1024];
+                
                 while (input.read(buffer) > 0) {
-                    fos.write(buffer);
+                   
+                	fos.write(buffer);
+                    
                 }
-            }
+            }            System.out.println();
+
         } catch (SQLException | IOException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -151,13 +159,15 @@ public class SQLManager {
                     conn.close();
                 }
                 if (fos != null) {
-                    fos.close();
+                	
+                	fos.close();
                 }
 
             } catch (SQLException | IOException e) {
                 System.out.println(e.getMessage());
             }
-        }
+ }
+    
     }
 	
 	   public static int countFilesuser(String user) throws Exception {
@@ -165,8 +175,8 @@ public class SQLManager {
 		   System.out.println("count Fileuploader = "+ user);
 		   
 		      DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-		      String mysqlUrl = "jdbc:mysql://localhost/dbpfe";
-		      Connection con = DriverManager.getConnection(mysqlUrl, "root", "");
+		      
+		      Connection con = DriverManager.getConnection(url, "root", "");
 		      System.out.println("Connection established......");
 		      Statement stmt = con.createStatement();
 		      String query = "select count(*) from files where Owner = '"+user+"'";
@@ -183,7 +193,7 @@ public class SQLManager {
         	System.out.println("Fileuploader = "+ user);
         	
         	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            String url = "jdbc:mysql://localhost/dbpfe";
+            
             Connection conn = DriverManager.getConnection(url,"root","");
             Statement stmt = conn.createStatement();
             ResultSet rs;
@@ -245,8 +255,8 @@ public class SQLManager {
 	
 	   public static int countFiles() throws Exception {
 		      DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-		      String mysqlUrl = "jdbc:mysql://localhost/dbpfe";
-		      Connection con = DriverManager.getConnection(mysqlUrl, "root", "");
+		
+		      Connection con = DriverManager.getConnection(url, "root", "");
 		      System.out.println("Connection established......");
 		      Statement stmt = con.createStatement();
 		      String query = "select count(*) from files";
@@ -260,7 +270,7 @@ public class SQLManager {
     public static String [][] FileUploader () {
         try {
         	DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            String url = "jdbc:mysql://localhost/dbpfe";
+          
             Connection conn = DriverManager.getConnection(url,"root","");
             Statement stmt = conn.createStatement();
             ResultSet rs;
@@ -292,8 +302,8 @@ public class SQLManager {
 		      //Registering the Driver
 		      DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 		      //Getting the connection
-		      String mysqlUrl = "jdbc:mysql://localhost/dbpfe";
-		      Connection con = DriverManager.getConnection(mysqlUrl, "root", "");
+		     
+		      Connection con = DriverManager.getConnection(url, "root", "");
 		      System.out.println("Connection established......");
 
 		      //Inserting values
@@ -310,7 +320,7 @@ public class SQLManager {
 		      System.out.println("Record inserted .....");
 		   }
 	
-	public static void insertReg(String query, String QRPath, String Owner){
+	public static void insertReg(String query, String QRPath, String Email,String Owner){
 	    Connection conn = null;
 	    Statement stmt = null;
 	    try {
@@ -319,7 +329,7 @@ public class SQLManager {
 	       } catch (Exception e) {
 	          System.out.println(e);
 	    }
-	    conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/dbpfe", "root", "");
+	    conn = (Connection) DriverManager.getConnection(url, "root", "");
 	    System.out.println("Connection is created successfully:");
 	    stmt = (Statement) conn.createStatement();
 	    stmt.executeUpdate(query);
@@ -327,9 +337,8 @@ public class SQLManager {
 	    QRSave QRSaveFrame = new QRSave(QRPath);
 	    QRSaveFrame.qro(null, QRPath);
 	    
-	    Home homeFrame = new Home(QRPath,Owner);
-	    homeFrame.sain(null, QRPath, Owner);
-	    
+	    Home homeFrame = new Home(QRPath,Email,Owner);
+	    homeFrame.sain(null, QRPath,Email, Owner);
 	    
 	    } catch (SQLException excep) {
 	       excep.printStackTrace();
@@ -352,20 +361,20 @@ public class SQLManager {
 	
 	public static String[] InfoUser(String QR) {
         try {
-            String url = "jdbc:mysql://localhost/dbpfe";
             Connection conn = DriverManager.getConnection(url,"root","");
             Statement stmt = conn.createStatement();
             ResultSet rs;
  
-            rs = stmt.executeQuery("SELECT * FROM users WHERE QRB64 = '"+QR+"'");
-            String info[] = new String[4];
+             rs = stmt.executeQuery("SELECT * FROM users WHERE QRB64 = '"+QR+"'");
+          
+ String info[] = new String[4];
             while ( rs.next() ) {
                 info[0] = rs.getString("Email");
                 info[1] = rs.getString("FirstName");
                 info[2] = rs.getString("LastName");
                 info[3] = rs.getString("Password");
                 System.out.println(info[0]);
-                return info;
+                return info; 
             }
             conn.close();
         } catch (Exception e) {
